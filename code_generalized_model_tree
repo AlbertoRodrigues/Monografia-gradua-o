@@ -1,5 +1,5 @@
 require(MASS)
-#ImportaÁ„o dos dados
+#Importa√ß√£o dos dados
 
 #Deu certo
 #Dados Iris
@@ -21,16 +21,16 @@ y=data$Compressive.Strength..28.day..Mpa.
 y=as.numeric(as.character(y))
 x=data[,-c(1,11)]
 
-#Deu certo para poucas iteraÁıes, banco de dados grande.
+#Deu certo para poucas itera√ß√µes, banco de dados grande.
 #Dados parkinson
 data=read.csv(file.choose())
 #summary(data)
 x=data[,-5]
 y=data[,5] 
 
-#Em algumas iteraÁıes o algoritmo n„o converge, soluÁ„o: 
-#fazer v·rias vezes atÈ a quantidade necess·ria
-#Dados preÁos de casas
+#Em algumas itera√ß√µes o algoritmo n√£o converge, solu√ß√£o: 
+#fazer v√°rias vezes at√© a quantidade necess√°ria
+#Dados pre√ßos de casas
 data=read.csv(file.choose())
 #summary(data)
 x=data[,-c(1,2,8)]
@@ -44,7 +44,7 @@ y=data[,12]
 
 
 
-#PrÈ-processamentos
+#Pr√©-processamentos
 sapply(x,class)
 for(i in 1:ncol(x))
 {
@@ -60,12 +60,12 @@ porc_treino=0.7
 porc_validacao=0.4
 porc_teste=0.3
 tipo_resposta="continuo"
-#Hiperpar‚metros iniciais
-#Fazer otimizaÁ„o aleatÛria
+#Hiperpar√¢metros iniciais
+#Fazer otimiza√ß√£o aleat√≥ria
 num_de_validacoes=30
 erro_busca_aleatoria=c()
 desvio_padrao=c()
-#GeraÁ„o aleatÛria
+#Gera√ß√£o aleat√≥ria
 hiperp_num_minimo_terminal=c(50,100,120,150,180,200,210,250)
 hiperp_num_minimo_interno=c(180,200,210,250,300,500,1000,1500,2000)
 hiperp_prof_max=c(2,3,4,5,6,7)
@@ -75,7 +75,7 @@ hiperp_tipo_poda=2
 hiperp_num_minimo_modelos=c(2,3,4)
 hiperp_num_min_obs_test_var=c(30,50,100,200,300,400,500,600)
 
-#CriaÁ„o dos vetores do hiperpar‚metros das validaÁıes
+#Cria√ß√£o dos vetores do hiperpar√¢metros das valida√ß√µes
 vetor_num_minimo_terminal=c()
 vetor_num_minimo_interno=c()
 vetor_prof_max=c()
@@ -97,7 +97,7 @@ for(v in 1:num_de_validacoes)
   num_minimo_modelos=hiperp_num_minimo_modelos[ceiling(runif(1)*length(hiperp_num_minimo_modelos))]
   num_min_obs_test_var=hiperp_num_min_obs_test_var[ceiling(runif(1)*length(hiperp_num_min_obs_test_var))]
   
-  #Vetor de hiperpar‚metros de todas as validaÁıes
+  #Vetor de hiperpar√¢metros de todas as valida√ß√µes
   vetor_num_minimo_terminal[v]=num_minimo_terminal
   vetor_num_minimo_interno[v]=num_minimo_interno
   vetor_prof_max[v]=prof_max
@@ -110,16 +110,16 @@ for(v in 1:num_de_validacoes)
   #Separacao treino e teste
   #tipos_separacao=amostragem aleatoria.
   tipo_separacao="amostragem_aleatoria"
-  #Quantidade amostragens aleatÛrias realizadas
+  #Quantidade amostragens aleat√≥rias realizadas
   numero_amostragens=20
-  #Vetor que ter· todos os erros de teste
+  #Vetor que ter√° todos os erros de teste
   erro_teste=c()
   if(tipo_separacao=="amostragem_aleatoria")
   {
     for(l in 1:numero_amostragens)
     {
-      #Realizando a partiÁ„o 
-      #funÁ„o dos indices da partiÁ„o de treino  
+      #Realizando a parti√ß√£o 
+      #fun√ß√£o dos indices da parti√ß√£o de treino  
       amostra=sample(1:nrow(x),ceiling(nrow(x)*porc_treino),replace = F)
       x_treino=x[amostra,]
       y_treino=y[amostra]
@@ -127,7 +127,7 @@ for(v in 1:num_de_validacoes)
       y_teste=y[-amostra]
       
       
-      #Fazendo validaÁ„o se necess·rio
+      #Fazendo valida√ß√£o se necess√°rio
       if(tipo_poda==1)
       {
         amostra2=sample(1:nrow(x_treino),ceiling(nrow(x_treino)*porc_validacao),replace=F)
@@ -138,12 +138,12 @@ for(v in 1:num_de_validacoes)
       }
       
       #vetor_ind_obs=list()
-      #FunÁ„o que faz todas as medias consecutivas da variavel explicativa numerica
+      #Fun√ß√£o que faz todas as medias consecutivas da variavel explicativa numerica
       retorna_medias_var_numerica=function(x)
       {
-        #Seleciona os ˙nicos e ordena
+        #Seleciona os √∫nicos e ordena
         x=sort(unique(x))
-        #Vetor de mÈdias
+        #Vetor de m√©dias
         medias=c()
         for(i in 1:length(x))
         {
@@ -156,9 +156,9 @@ for(v in 1:num_de_validacoes)
       }
       
       #Funcao que faz o melhor separador para variavel explicativa numerica,
-      #ela ser· usada em cada nÛ da ·rvore, em quanto outra funÁ„o chamar· ela em todos os nÛs.
-      #ObservaÁ„o: nossa algoritmo tem que existir pelo menos uma vari·vel numÈrica,
-      #ou temos que pensar melhor nessa funÁ„o.
+      #ela ser√° usada em cada n√≥ da √°rvore, em quanto outra fun√ß√£o chamar√° ela em todos os n√≥s.
+      #Observa√ß√£o: nossa algoritmo tem que existir pelo menos uma vari√°vel num√©rica,
+      #ou temos que pensar melhor nessa fun√ß√£o.
       
       separador_subconjuntos=function(x,y){
         separador=sd(y)
@@ -168,26 +168,26 @@ for(v in 1:num_de_validacoes)
         coluna_var_separadora=3
         #Contador
         contador=0
-        #Vetor de tipos das vari·veis
+        #Vetor de tipos das vari√°veis
         a=sapply(x,class)
-        #PosiÁ„o de alguma coluna numÈrica se o subconjunto n„o tiver separador "bom",
-        #ou seja, o caso em que nenhum separador melhor o ganho em desvio-padr„o. 
+        #Posi√ß√£o de alguma coluna num√©rica se o subconjunto n√£o tiver separador "bom",
+        #ou seja, o caso em que nenhum separador melhor o ganho em desvio-padr√£o. 
         a=which(a=="numeric")[1]
         
         for(i in 1:ncol(x))
         {
           if(class(x[,i])=="numeric")
           {
-            #Chamando a funÁ„o que d· as mÈdias ordenadas
+            #Chamando a fun√ß√£o que d√° as m√©dias ordenadas
             medias_separadoras=retorna_medias_var_numerica(x[,i])
             #print(medias_separadoras)
             for(j in 1:length(medias_separadoras))
             {
               #Posicoes que atendem a condicao
               posicoes_obs_atendidas=which(x[,i]<=medias_separadoras[j])
-              #Posicoes que n„o atendem a condicao
+              #Posicoes que n√£o atendem a condicao
               posicoes_obs_nao_atendidas=setdiff(1:length(x[,i]),posicoes_obs_atendidas)
-              #Calculando todos os desvios-padroes ponderados e verificando se È melhor 
+              #Calculando todos os desvios-padroes ponderados e verificando se √© melhor 
               #trocar para esse separador
               if(length(posicoes_obs_atendidas)>num_min_obs_test_var & 
                  length(posicoes_obs_nao_atendidas)>num_min_obs_test_var)
@@ -205,37 +205,37 @@ for(v in 1:num_de_validacoes)
                 }
               }
             }
-            #VerificaÁ„o se n„o existe reduÁ„o do desvio-padr„o da vari·vel resposta
+            #Verifica√ß√£o se n√£o existe redu√ß√£o do desvio-padr√£o da vari√°vel resposta
             if(contador==0)
             {
-              #Pondo um valor do separador extremamente especÌfico para que identifiquemos
-              #partiÁıes inutÈis.
+              #Pondo um valor do separador extremamente espec√≠fico para que identifiquemos
+              #parti√ß√µes inut√©is.
               separador2=123456789
-              #PosiÁ„o da primeira vari·vel numÈrica encontrada, usada tambÈm para
+              #Posi√ß√£o da primeira vari√°vel num√©rica encontrada, usada tamb√©m para
               #identificar
               coluna_var_separadora=a
             }
           }
         }
-        #Retorna o valor separador e o nome da vari·vel que È do melhor separador.
+        #Retorna o valor separador e o nome da vari√°vel que √© do melhor separador.
         return(list(separador2,colnames(x)[coluna_var_separadora]))
       }
       
       
       #Funcao de construcao da arvore, retorna uma lista com todas as observacoes em cada
-      #nÛ da ·rvore
-      #Chama as funÁıes separador_subconjuntos, que chama a funÁ„o retorna_medias_var_numerica
-      #para nÛ, e assim construir a primeira vers„o da ·rvore completa, com cada observaÁ„o
-      #em seu respectivo nÛ.
+      #n√≥ da √°rvore
+      #Chama as fun√ß√µes separador_subconjuntos, que chama a fun√ß√£o retorna_medias_var_numerica
+      #para n√≥, e assim construir a primeira vers√£o da √°rvore completa, com cada observa√ß√£o
+      #em seu respectivo n√≥.
       
       constroi_arvore=function(x,y)
       {
-        #Listas para receber o separador e vari·vel separadora
+        #Listas para receber o separador e vari√°vel separadora
         lista_temporaria2=c()
         lista_temporaria3=c()
-        #Indice de todas as observaÁıes
+        #Indice de todas as observa√ß√µes
         ind_obs=list(1:length(y))
-        #Realizando as partiÁıes com a profundidade m·xima
+        #Realizando as parti√ß√µes com a profundidade m√°xima
         for(i in 1:(2^(prof_max)-1))
         {
           #Contando com o fato de que existe pelo menos um separador
@@ -247,13 +247,13 @@ for(v in 1:num_de_validacoes)
               #print(lista_temporaria)
               lista_temporaria2[i]=lista_temporaria[[1]]
               lista_temporaria3[i]=lista_temporaria[[2]]
-              #ObservaÁıes do filho esquerdo
+              #Observa√ß√µes do filho esquerdo
               pos_lado_e=(ind_obs[[i]][which(x[ind_obs[[i]],lista_temporaria[[2]]]
                                              <=lista_temporaria[[1]])])
-              #ObservaÁıes do filho direito
+              #Observa√ß√µes do filho direito
               pos_lado_d=(ind_obs[[i]][which(x[ind_obs[[i]],lista_temporaria[[2]]]
                                              >lista_temporaria[[1]])])
-              #CondiÁıes dos hiperpar‚metros para filhos n„o-folhas
+              #Condi√ß√µes dos hiperpar√¢metros para filhos n√£o-folhas
               if((2*i<=(2^(prof_max)-1)) & length(pos_lado_d)>=num_minimo_interno &
                  length(pos_lado_e)>=num_minimo_interno & sd(y[ind_obs[[i]]])>=sd(y)*porc_min
                  & length(pos_lado_d)>0 & length(pos_lado_e)>0)
@@ -263,7 +263,7 @@ for(v in 1:num_de_validacoes)
               }
               else
               {
-                #CondiÁıes dos hiperpar‚metros para filhos folhas
+                #Condi√ß√µes dos hiperpar√¢metros para filhos folhas
                 if((2*i>(2^(prof_max)-1)) & length(pos_lado_d)>=num_minimo_terminal &
                    length(pos_lado_e)>=num_minimo_terminal & sd(y[ind_obs[[i]]])>=
                    sd(y)*porc_min & length(pos_lado_d)>0 & length(pos_lado_e)>0)
@@ -304,7 +304,7 @@ for(v in 1:num_de_validacoes)
       arvore1=constroi_arvore(x_treino,y_treino)
       arvore=arvore1[[1]];arvore
       data_frame_sep=cbind.data.frame(arvore1[[2]],arvore1[[3]])
-      colnames(data_frame_sep)=c("Valores Separadores","Vari·veis Separadoras")
+      colnames(data_frame_sep)=c("Valores Separadores","Vari√°veis Separadoras")
       #data_frame_sep
       
       #x$Post.Month
@@ -413,7 +413,7 @@ for(v in 1:num_de_validacoes)
             }
             #print(length(indices_modelos))
             erro_menor[k]=1000000
-            #15 porque È o tamanho total de modelos
+            #15 porque √© o tamanho total de modelos
             for(i in 1:9)
             {
               if(is.element(i,indices_modelos))
@@ -527,7 +527,7 @@ for(v in 1:num_de_validacoes)
             }
             #print(length(indices_modelos))
             erro_menor[k]=1000000
-            #6 porque È o tamanho total de modelos
+            #6 porque √© o tamanho total de modelos
             for(i in 1:4)
             {
               if(is.element(i,indices_modelos))
@@ -587,7 +587,7 @@ for(v in 1:num_de_validacoes)
       
       data_frame_sep
       #REVER!!-Importante
-      #FunÁ„o que diz onde qual o Ìndice do subconjunto da observaÁ„o na ·rvore.
+      #Fun√ß√£o que diz onde qual o √≠ndice do subconjunto da observa√ß√£o na √°rvore.
       predict=function(x,i)
       {
         if(data_frame_sep[2*i,1]!=123456789 && data_frame_sep[2*i+1,1]!=123456789 
@@ -625,7 +625,7 @@ for(v in 1:num_de_validacoes)
       #  print(predict(x_teste[i,],1))  
       #}
       data_frame_sep
-      #FunÁ„o que prediz o valor da observaÁ„o
+      #Fun√ß√£o que prediz o valor da observa√ß√£o
       predict2=function(x)
       {
         return(predict.glm(melhores_modelos[[predict(x,1)]],x,type="response"))
@@ -656,7 +656,7 @@ for(v in 1:num_de_validacoes)
       
       if(tipo_poda==1)
       {
-        #FunÁ„o que fiz o subconjunto(folha) final do conjunto de validaÁ„o
+        #Fun√ß√£o que fiz o subconjunto(folha) final do conjunto de valida√ß√£o
         subconjunto_folha=c()
         for(i in 1:nrow(x_validacao))
         {
@@ -666,7 +666,7 @@ for(v in 1:num_de_validacoes)
       #subconjunto_folha
       
       
-      #FunÁ„o que fiz em qual profundidade da ·rvore a observaÁ„o est·
+      #Fun√ß√£o que fiz em qual profundidade da √°rvore a observa√ß√£o est√°
       #Refazer
       if(tipo_poda==1)
       {
@@ -822,7 +822,7 @@ for(v in 1:num_de_validacoes)
       #predict(x_teste[1,],1)
       #predict2(x_teste[1,])
       #predict3(x_teste)
-      #Erro mÈdia absoluto
+      #Erro m√©dia absoluto
       erro_teste=append(erro_teste,mean(abs(y_teste-predict3(x_teste))))
     }
   }
@@ -852,10 +852,10 @@ tabela
 require(xtable)
 tabela=read.csv(file.choose());tabela
 xtable(tabela,digits = 4)
-#ValidaÁ„o cruzada
+#Valida√ß√£o cruzada
 
-#Dados especificos de preÁos das casas
-#quantidade de validaÁıes=6+6+3+5+5+1+6
+#Dados especificos de pre√ßos das casas
+#quantidade de valida√ß√µes=6+6+3+5+5+1+6
 x1=erro_busca_aleatoria[pos]
 x2=desvio_padrao[pos]
 x3=vetor_num_minimo_terminal[pos]
